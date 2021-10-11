@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  
+  <title>Frontend Mentor | Calculator app</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Spartan:wght@700&display=swap');
+  </style> 
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="calc-wrapper">
+    <!-- Logo and Controls -->
+    <div class="top-wrapper">
+      <h3>calc</h3>
+      <!-- theme controls -->
+      <div class="theme-controls-wrapper">
+        <h6>THEME</h6>
+        <div class="controls-wrapper">
+          <div class="btn-group">
+            <div class="toggle-wrapper">
+              <button class="toggle"></button>
+              <h6>1</h6>
+            </div>
+            <div class="toggle-wrapper">
+              <button class="toggle hidden"></button>
+              <h6>2</h6>
+            </div>
+            <div class="toggle-wrapper">
+              <button class="toggle hidden"></button>
+              <h6>3</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Output -->
+    <div class="output-wrapper">
+      <h1 id="output-txt">0</h1>
+    </div>
+
+    <!-- calculate section -->
+    <div class="content-wrapper">
+      <div class="btn-grid">
+        <button name="numbers" value="7">7</button>
+        <button name="numbers" value="8">8</button>
+        <button name="numbers" value="9">9</button>
+        <button class="btn-txt" id="del-btn">DEL</button>
+        <button name="numbers" value="4">4</button>
+        <button name="numbers" value="5">5</button>
+        <button name="numbers" value="6">6</button>
+        <div class="operator-wrapper">
+          <input class = "operator-radio" type="radio" name="myRadio" id="plus-btn">
+          <label for="plus-btn">+</label>
+        </div>
+        <button name="numbers" value="1">1</button>
+        <button name="numbers" value="2">2</button>
+        <button name="numbers" value="3">3</button>
+        <div class="operator-wrapper">
+          <input class = "operator-radio" type="radio" name="myRadio" id="minus-btn">
+          <label for="minus-btn">-</label>
+        </div>
+
+        <button id="point-btn">.</button>
+        <button name="numbers" value="0">0</button>
+        <div class="operator-wrapper">
+          <input class = "operator-radio" type="radio" name="myRadio" id="divide-btn">
+          <label for="divide-btn">/</label>
+        </div>
+        <div class="operator-wrapper">
+          <input class = "operator-radio" type="radio" name="myRadio" id="times-btn">
+          <label for="times-btn">x</label>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="btn-txt" id="reset-btn">RESET</button>
+        <button class="equals-btn" id="equal-btn">=</button>
+      </div>
+    </div>
+  </div>
+  
+  
+  <script src="index.js"></script>
+</body>
+</html>
