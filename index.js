@@ -13,6 +13,7 @@ console.log(toggleBtns[2]);
 
 let numbers = [];
 let number = 0;
+let operators = [];
 let output = 0;
 
 plusBtn.checked = "";
@@ -55,12 +56,32 @@ buttons.forEach(function (button) {
   });
 });
 
+// Which Operator?
+function findOperator() {
+  if (operators.length > 2) {
+    operators.shift();
+  }
+
+  for (let i = 0; i < operators.length; i++) {
+    console.log(operators);
+    if (operators[0] === "add") {
+      add();
+    } else if (operators[0] === "subtract") {
+      subtract();
+    }
+  }
+}
+
 // ADDITION
 // plus button
 plusBtn.addEventListener("click", function () {
+  operators.push("add");
+  if (number === "") {
+    number = 0;
+  }
   numbers.push(parseInt(number));
   number = "";
-  add();
+  findOperator();
 });
 
 // addition calculation
@@ -76,28 +97,36 @@ function add() {
 // SUBTRACT
 // subtract button
 minusBtn.addEventListener("click", function () {
+  operators.push("subtract");
+  if (number === "") {
+    number = 0;
+  }
   numbers.push(parseInt(number));
   console.log(numbers);
   number = "";
-  subtract();
+  findOperator();
 });
 
 function subtract() {
   output = numbers[0];
   //   console.log(numbers);
+  if (number === "") {
+    number = 0;
+  }
   for (let i = 1; i < numbers.length; i++) {
     output = output - numbers[i];
   }
+
   renderEl();
 }
 
 // render output
 function renderEl() {
-  for (let i = 0; i <= numbers.length; i++) {
-    numbers.pop();
-  }
+  numbers = [];
   numbers.push(output);
   console.log(numbers);
+  number = "";
+  console.log("number: " + number);
   outputTxt.innerText = output;
 }
 
