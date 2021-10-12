@@ -9,17 +9,16 @@ const outputTxt = document.getElementById("output-txt");
 const resetBtn = document.getElementById("reset-btn");
 const equalBtn = document.getElementById("equal-btn");
 const toggleBtns = document.querySelectorAll(".toggle");
-console.log(toggleBtns[2]);
 
 let numbers = [];
 let number = 0;
 let operators = [];
 let output = 0;
 
-plusBtn.checked = "";
-minusBtn.checked = "";
-divideBtn.checked = "";
-timesBtn.checked = "";
+plusBtn.checked = false;
+minusBtn.checked = false;
+divideBtn.checked = false;
+timesBtn.checked = false;
 
 // change theme
 toggleBtns[0].addEventListener("click", function () {
@@ -52,8 +51,17 @@ buttons.forEach(function (button) {
   button.addEventListener("click", function () {
     number += button.value;
     outputTxt.innerText = number;
-    console.log(number);
   });
+});
+
+// delete button
+delBtn.addEventListener("click", function () {
+  number = number.substr(0, number.length - 1);
+  if (number === "") {
+    outputTxt.innerText = 0;
+  } else {
+    outputTxt.innerText = number;
+  }
 });
 
 // Which Operator?
@@ -61,13 +69,17 @@ function findOperator() {
   if (operators.length > 2) {
     operators.shift();
   }
-
+  console.log(operators);
   for (let i = 0; i < operators.length; i++) {
     console.log(operators);
     if (operators[0] === "add") {
       add();
     } else if (operators[0] === "subtract") {
       subtract();
+    } else if (operators[0] === "multiply") {
+      multiply();
+    } else if (operators[0] === "divide") {
+      divide();
     }
   }
 }
@@ -76,9 +88,26 @@ function findOperator() {
 // plus button
 plusBtn.addEventListener("click", function () {
   operators.push("add");
-  if (number === "") {
+  if (
+    (number === "" &&
+      operators[0] === "multiply" &&
+      operators[1] !== "subtract") ||
+    (number === "" && operators[0] === "multiply" && operators[1] !== "add")
+  ) {
+    number = 1;
+  } else if (
+    (number === "" &&
+      operators[0] === "divide" &&
+      operators[1] !== "subtract") ||
+    (number === "" && operators[0] === "divide" && operators[1] !== "add")
+  ) {
+    number = 1;
+  } else if (number === "" && operators[0] === "subtract") {
+    number = 0;
+  } else if (number === "" && operators[0] === "add") {
     number = 0;
   }
+
   numbers.push(parseInt(number));
   number = "";
   findOperator();
@@ -87,6 +116,7 @@ plusBtn.addEventListener("click", function () {
 // addition calculation
 function add() {
   output = 0;
+  console.log(numbers);
   for (let i = 0; i < numbers.length; i++) {
     output += numbers[i];
   }
@@ -98,9 +128,26 @@ function add() {
 // subtract button
 minusBtn.addEventListener("click", function () {
   operators.push("subtract");
-  if (number === "") {
+  if (
+    (number === "" &&
+      operators[0] === "multiply" &&
+      operators[1] !== "subtract") ||
+    (number === "" && operators[0] === "multiply" && operators[1] !== "add")
+  ) {
+    number = 1;
+  } else if (
+    (number === "" &&
+      operators[0] === "divide" &&
+      operators[1] !== "subtract") ||
+    (number === "" && operators[0] === "divide" && operators[1] !== "add")
+  ) {
+    number = 1;
+  } else if (number === "" && operators[0] === "subtract") {
+    number = 0;
+  } else if (number === "" && operators[0] === "add") {
     number = 0;
   }
+
   numbers.push(parseInt(number));
   console.log(numbers);
   number = "";
@@ -116,26 +163,106 @@ function subtract() {
   for (let i = 1; i < numbers.length; i++) {
     output = output - numbers[i];
   }
-
   renderEl();
 }
+// SUBTRACT END
+
+// MULTIPLY
+// multiply button
+timesBtn.addEventListener("click", function () {
+  operators.push("multiply");
+  if (
+    (number === "" &&
+      operators[0] === "multiply" &&
+      operators[1] !== "subtract") ||
+    (number === "" && operators[0] === "multiply" && operators[1] !== "add")
+  ) {
+    number = 1;
+  } else if (
+    (number === "" &&
+      operators[0] === "divide" &&
+      operators[1] !== "subtract") ||
+    (number === "" && operators[0] === "divide" && operators[1] !== "add")
+  ) {
+    number = 1;
+  } else if (number === "" && operators[0] === "subtract") {
+    number = 0;
+  } else if (number === "" && operators[0] === "add") {
+    number = 0;
+  }
+
+  numbers.push(parseInt(number));
+  number = "";
+  findOperator();
+});
+
+// multiply calculation
+function multiply() {
+  output = numbers[0];
+  for (let i = 1; i < numbers.length; i++) {
+    output = output * numbers[i];
+  }
+  renderEl();
+}
+// MULTIPLY END
+
+// DIVIDE
+// divide button
+divideBtn.addEventListener("click", function () {
+  operators.push("divide");
+  if (
+    (number === "" &&
+      operators[0] === "multiply" &&
+      operators[1] !== "subtract") ||
+    (number === "" && operators[0] === "multiply" && operators[1] !== "add")
+  ) {
+    number = 1;
+  } else if (
+    (number === "" &&
+      operators[0] === "divide" &&
+      operators[1] !== "subtract") ||
+    (number === "" && operators[0] === "divide" && operators[1] !== "add")
+  ) {
+    number = 1;
+  } else if (number === "" && operators[0] === "subtract") {
+    number = 0;
+  } else if (number === "" && operators[0] === "add") {
+    number = 0;
+  }
+
+  numbers.push(parseInt(number));
+  number = "";
+  findOperator();
+});
+
+// divide calculation
+function divide() {
+  output = numbers[0];
+  for (let i = 1; i < numbers.length; i++) {
+    output = output / numbers[i];
+  }
+  renderEl();
+}
+// DIVIDE END
 
 // render output
 function renderEl() {
   numbers = [];
   numbers.push(output);
-  console.log(numbers);
   number = "";
-  console.log("number: " + number);
-  outputTxt.innerText = output;
+  outputTxt.innerText = Math.round(output * 100) / 100;
 }
 
-// render answer
+// Equal Button
 equalBtn.addEventListener("click", function () {
   if (plusBtn.checked) {
     output += parseInt(number);
   } else if (minusBtn.checked) {
     output -= parseInt(number);
+  } else if (timesBtn.checked) {
+    output *= parseInt(number);
+  } else if (divideBtn.checked) {
+    output /= parseInt(number);
   }
 
   plusBtn.checked = "";
@@ -146,7 +273,7 @@ equalBtn.addEventListener("click", function () {
   renderEl();
 });
 
-// reset button
+// Reset Button
 resetBtn.addEventListener("click", function () {
   output = 0;
   number = "";
